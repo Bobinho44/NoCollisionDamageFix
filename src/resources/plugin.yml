@@ -1,0 +1,8 @@
+name: NoCollisionDamageFix
+main: fr.bobinho.nocollisiondamagefix.NoCollisionDamageFixCore
+version: 0.0.1
+author: Bobinho
+api-version: 1.17
+commands:
+  cmd:
+    description: commands.
