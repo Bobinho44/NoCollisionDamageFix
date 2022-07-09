@@ -1,9 +1,11 @@
 package fr.bobinho.nocollisiondamagefix;
 
-import co.aikar.commands.PaperCommandManager;
-import fr.bobinho.nocollisiondamagefix.api.command.BCommand;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import fr.bobinho.nocollisiondamagefix.api.logger.BLogger;
+import fr.bobinho.nocollisiondamagefix.api.validate.BValidate;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
@@ -40,6 +42,18 @@ public final class NoCollisionDamageFixCore extends JavaPlugin {
     }
 
     /**
+     * Gets the FPlayer
+     *
+     * @param player the player
+     * @return the FPlayer
+     */
+    public static FPlayer getFPlayer(@Nonnull Player player) {
+        BValidate.notNull(player);
+
+        return FPlayers.getInstance().getByPlayer(player);
+    }
+
+    /**
      * Enables and initializes the plugin
      */
     @Override
@@ -47,7 +61,6 @@ public final class NoCollisionDamageFixCore extends JavaPlugin {
         bLogger.info("Loading the plugin...");
 
         //Registers commands and listeners
-        registerCommands();
         registerListeners();
     }
 
@@ -73,23 +86,6 @@ public final class NoCollisionDamageFixCore extends JavaPlugin {
             }
         }
         bLogger.info("Successfully loaded listeners.");
-    }
-
-    /**
-     * Registers commands
-     */
-    private void registerCommands() {
-        final PaperCommandManager commandManager = new PaperCommandManager(this);
-        Reflections reflections = new Reflections("fr.bobinho.nocollisiondamagefix.commands");
-        Set<Class<? extends BCommand>> classes = reflections.getSubTypesOf(BCommand.class);
-        for (@Nonnull Class<? extends BCommand> command : classes) {
-            try {
-                commandManager.registerCommand(command.getDeclaredConstructor().newInstance());
-            } catch (Exception exception) {
-                getBLogger().error("Couldn't register command(" + command.getName() + ")!", exception);
-            }
-        }
-        bLogger.info("Successfully loaded commands.");
     }
 
 }

@@ -1,7 +1,5 @@
 package fr.bobinho.nocollisiondamagefix.api.logger;
 
-
-import fr.bobinho.nocollisiondamagefix.api.color.BColor;
 import fr.bobinho.nocollisiondamagefix.api.validate.BValidate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,7 +11,9 @@ import java.io.StringWriter;
 /**
  * Bobinho logger library
  */
-public record BLogger(String prefix) {
+public class BLogger {
+
+    private final String prefix;
 
     /**
      * Creates a new logger
@@ -35,7 +35,7 @@ public record BLogger(String prefix) {
     public void info(@Nonnull String message) {
         BValidate.notNull(message);
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', BColor.BRIGHT_BLUE + prefix + " " + message));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.BLUE + prefix + " " + message));
     }
 
     /**
@@ -47,7 +47,7 @@ public record BLogger(String prefix) {
     public void warn(@Nonnull String message) {
         BValidate.notNull(message);
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', BColor.AMBER + prefix + " " + message));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.GOLD + prefix + " " + message));
     }
 
     /**
@@ -59,7 +59,7 @@ public record BLogger(String prefix) {
     public void error(@Nonnull String message) {
         BValidate.notNull(message);
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', BColor.VERMILION + prefix + " " + message));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.RED + prefix + " " + message));
     }
 
     /**
@@ -76,7 +76,7 @@ public record BLogger(String prefix) {
         StringWriter exceptionWriter = new StringWriter();
         exception.printStackTrace(new PrintWriter(exceptionWriter));
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', BColor.SCARLET + prefix + " " + message + ": &c" + exceptionWriter));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.DARK_RED + prefix + " " + message + ": &c" + exceptionWriter));
     }
 
     /**
@@ -93,7 +93,7 @@ public record BLogger(String prefix) {
         StringWriter errorWriter = new StringWriter();
         error.printStackTrace(new PrintWriter(errorWriter));
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', BColor.SCARLET + prefix + " " + message + ": &c" + errorWriter));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.DARK_RED + prefix + " " + message + ": &c" + errorWriter));
     }
 
     /**
@@ -105,7 +105,7 @@ public record BLogger(String prefix) {
     public void debug(@Nonnull String message) {
         BValidate.notNull(message);
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', BColor.AQUA + prefix + " " + message));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', ChatColor.AQUA + prefix + " " + message));
     }
 
 }
