@@ -27,7 +27,7 @@ public final class DamageListener implements Listener {
      *
      * @param e the entity damage by entity event
      */
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority. MONITOR)
     public void onPlayerDamagePlayer(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player)) {
             return;
@@ -39,7 +39,7 @@ public final class DamageListener implements Listener {
 
         //Damages the "inside" player
         if (damagedPlayers.contains((Player) e.getEntity())) {
-            if (victim.getFaction().getRelationTo(attacker.getFaction()) != Relation.ALLY) {
+            if (victim.getFaction().getRelationTo(attacker.getFaction()) != Relation.ALLY && !e.isCancelled()) {
                 ((Player) e.getEntity()).damage(e.getDamage());
                 ((Player) e.getEntity()).setLastDamage(e.getDamage());
             }
